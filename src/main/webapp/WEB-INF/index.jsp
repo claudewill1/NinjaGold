@@ -11,11 +11,11 @@
 <body>
 	<div id="wrapper" class="d-flex flex-column">
 		<div id="goldAmount">
-			<h2>Your Gold: </h2>
-			<h2 class="border"><c:out value="${gold}"/></h2>
+			<h2>Your Gold: <c:out value="${totalGold}"/></h2>
+			<h2 class="border"></h2>
 		</div>
 		<div id="locations" class="d-flex flex-row justify-content-evenly">
-			<div class="farm" style="height:300px; width:300px;" class="border d-flex flex-column">
+			<div class="location" style="height:300px; width:300px;" class="border d-flex flex-column">
 				<form action="/findGold" method="post" style="height:300px; width:300px;" class="form-control d-flex flex-column align-items-center justify-content-center">
 					<h3>Farm</h3>
 					<p>(earns 10-20 gold)</p>
@@ -23,7 +23,7 @@
 					<input type="submit" value="Find Gold!" class="btn btn-primary">
 				</form>
 			</div>
-			<div class="cave" style="height:300px; width:300px;" class="border d-flex flex-column">
+			<div class="location" style="height:300px; width:300px;" class="border d-flex flex-column">
 				<form action="/findGold" method="post" style="height:300px; width:300px;" class="form-control d-flex flex-column align-items-center justify-content-center">
 					<h3>Cave</h3>
 					<p>(earns 5-10 gold)</p>
@@ -31,7 +31,7 @@
 					<input type="submit" value="Find Gold!" class="btn btn-primary">
 				</form>
 			</div>
-			<div class="house" style="height:300px; width:300px;" class="border d-flex flex-colum">
+			<div class="location" style="height:300px; width:300px;" class="border d-flex flex-colum">
 				<form action="/findGold" method="post" style="height:300px; width:300px;" class="form-control d-flex flex-column align-items-center justify-content-center">
 					<h3>House</h3>
 					<p>(earns 2-5 gold)</p>
@@ -39,7 +39,7 @@
 					<input type="submit" value="Find Gold!" class="btn btn-primary">
 				</form>
 			</div>
-			<div class="casino" style="height:300px; width:300px;" class="border d-flex flex-column">
+			<div class="location" style="height:300px; width:300px;" class="border d-flex flex-column">
 				<form action="/findGold" method="post" style="height:300px; width:300px;" class="form-control d-flex flex-column align-items-center justify-content-center">
 					<h3>Casino!</h3>
 					<p>(earns/takes 0 - 50 gold)</p>
@@ -50,10 +50,18 @@
 			</div>
 		</div>
 		<h1>Activities:</h1>
-		<footer class="overflow-auto p-3 border border-5" style="width:auto;height:400px">
-			
-			${message}
-		</footer>
+		<div class="messages">
+			<c:forEach items="${messages}" var="msg">
+				<c:choose>
+					<c:when test="${msg.contains('ouch')}">
+						<p class="text-danger">${msg}</p>
+					</c:when>
+					<c:otherwise>
+						<p class="text-success">${msg}</p>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
 	</div>
 </body>
 </html>

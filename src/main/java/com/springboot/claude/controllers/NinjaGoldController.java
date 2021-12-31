@@ -19,14 +19,14 @@ public class NinjaGoldController {
 	
 	@GetMapping("/")
 	public String index(Model model, HttpSession session) {
-		if(session.getAttribute("allGold") == null) {
-			session.setAttribute("allGold", 0);
+		if(session.getAttribute("totalGold") == null) {
+			session.setAttribute("totalGold", 0);
 		}
 		ArrayList<String> messages = new ArrayList<String>();
-		if(session.getAttribute("activities") == null) {
+		if(session.getAttribute("messages") == null) {
 			session.setAttribute("messages", messages);
 		}
-		model.addAttribute("allGold",session.getAttribute("allGold"));
+		model.addAttribute("totalGold",session.getAttribute("totalGold"));
 		model.addAttribute("messages",session.getAttribute("messages"));
 		
 		return "index.jsp";
@@ -54,15 +54,20 @@ public class NinjaGoldController {
 		} else if(location.equals("casino")) {
 			goldForTurn = (rng.nextInt((50+50)+1)-50);
 			if(goldForTurn < 0) {
-				messages.add(String.format("<p style='color:red'>You entered a %s and lost %d gold. ouch %s</p>", location,goldForTurn,formatter.format(now)));
+				messages.add(String.format("You entered a %s and lost %d gold. ouch %s</p>", location,goldForTurn,formatter.format(now)));
 			} else {
-				messages.add(String.format("You entered a %s and earned %d gold %s", location,goldForTurn,formatter.format(now));
+				messages.add(String.format("You entered a %s and earned %d gold %s", location,goldForTurn,formatter.format(now)));
 			}
 		} else {
 			System.out.println("location not recognized");
 			return "redirect:/";
 		}
-		int gold =(int)session.getAttribute("allGold")
+		int gold= (int)session.getAttribute("totalGold");
+		int totalGold = gold += goldForTurn;
+		session.setAttribute("totalGold", totalGold);
+		session.setAttribute("messages", messages);
+		
+		return "redirect:/";
 		
 	}
 	
